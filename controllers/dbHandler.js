@@ -102,10 +102,12 @@ updateTask: function (req, res) {
 						
 						task.taskName =req.body.newTaskName;
 
-						
-						//console.log(req.body.newTaskName);
-
 						task.taskDescription =req.body.newTaskD;
+
+						task.taskTime =req.body.newTaskTime;
+
+					    task.taskDate =req.body.newTaskDate;
+
                         user.markModified("tasks");
 						user.save(function (err) {
 							if (err) {

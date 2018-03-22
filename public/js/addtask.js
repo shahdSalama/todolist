@@ -1,4 +1,19 @@
 var userVar;
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+ if(dd<10){
+        dd='0'+dd
+    } 
+    if(mm<10){
+        mm='0'+mm
+    } 
+
+today = yyyy+'-'+mm+'-'+dd;
+
+document.getElementById("taskdate").setAttribute("min", today);
+//document.getElementsByClassName("task-date").setAttribute("min", today);
 // function to get tasks
 $(function () {
   $.ajax({
@@ -51,23 +66,23 @@ $(function () {
 });
 // function to show the tasks
 function showTasks(task) {
-
+     var formatedDate = task.taskDate;
      var container = $(`
           <li class="li-task">
           <span class="remove-item">x</span>
             
            
-
-            ${task.taskName ? ` <input type="text" class="task-name" value=" ${task.taskName}">` : ""}
+             <span >Task Name :</span>
+             ${task.taskName ? ` <input type="text" class="task-name" value="${task.taskName}">` : ""}
             
-
-            ${task.taskDescription ? `<textarea type="text" class="task-d" >${task.taskDescription}</textarea>` : ""}
+            <span >Description :</span>
+              ${task.taskDescription ? `<textarea type="text" class="task-d" >${task.taskDescription}</textarea>` : ""}
             
-
-            ${task.taskTime ? `<p>task time: ${task.taskTime}</p>` : ""}
+            <span >Task Time :</span>
+             ${task.taskTime ? `<input type="text" class="task-time" value="${task.taskTime}">` : ""}
             
-           
-            ${task.taskDate ? ` <p>task date: ${task.taskDate}"</p>` : ""}
+           <span >Task Date :</span>
+             ${task.taskDate ? `<input type="date" min="${today}" class="task-date" value="${formatedDate}">` : ""}
 
             <button class="update-button">UPDATE</button>
 
@@ -75,6 +90,7 @@ function showTasks(task) {
             ****************************************************************************************************
           </li>
           `)
+
       return  $(".user-tasks").append((container)); 
   }
 
@@ -113,11 +129,20 @@ function showTasks(task) {
 /// update task
 
   $(document).on("click", ".update-button", function () {
+var nTaskDate = $(this).parent(".li-task").find(".task-date").val()
+if (nTaskDate < today)
+{
+
+return $(".alert-messages h2").text("Cannot set date before today");
+
+}
 
  var updatedTask = {
     taskId      : $(this).parent(".li-task").find(".task-id").text(),
     newTaskName : $(this).parent(".li-task").find(".task-name").val(),
     newTaskD    : $(this).parent(".li-task").find(".task-d").val(),
+    newTaskDate : $(this).parent(".li-task").find(".task-date").val(),
+    newTaskTime : $(this).parent(".li-task").find(".task-time").val(),
   }
 
 
