@@ -27,7 +27,7 @@ sign in by typing username and a password and an email
 
 this account will be saved in data base if no user account exists in the database with the same name
  
-now you can successfuly sign in and create a to do task wich will be add in the list below the inputs with an X sign to be able to delee it
+now you can successfuly sign in and create a to do task which will be add in the list below the inputs with an X sign to be able to delee it
 
 
 
